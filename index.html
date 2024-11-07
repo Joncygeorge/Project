@@ -10,5 +10,38 @@
     <h1>Train Tracking System</h1>
     <div class="form-container">
         <h3>Add / Update Train</h3>
+        form id="trainForm">
+            <input type="hidden" id="trainId" value="">
+            <label for="trainName">Train Name:</label>
+            <input type="text" id="trainName" required>
+            <label for="trainNumber">Train Number:</label>
+            <input type="text" id="trainNumber" required>
+            <label for="source">Source:</label>
+            <input type="text" id="source" required>
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" required>
+            <button type="submit">Save Train</button>
+        </form>
+    </div>
+    <div class="train-list-container">
+        <h3>Train List</h3>
+        <table id="trainList">
+            <thead>
+                <tr>
+                    <th>Train Name</th>
+                    <th>Train Number</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Train rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
         </div>
 </body>
