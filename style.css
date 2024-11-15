@@ -8,12 +8,3 @@ body {
 h1 {
     text-align: center;
 }
-.form-container, .train-list-container{
-    background: bisque;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 600px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
