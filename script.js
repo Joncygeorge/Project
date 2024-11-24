@@ -25,6 +25,18 @@ app.get('/trains/:id', (req, res) => {
     });
 });
 
+
+// create a new train
+app.post('/trains', (req, res) => {
+    const { name, type, status } = req.body;
+    const query = 'INSERT INTO trains (name, type, status) VALUES (?, ?, ?)';
+    db.query(query, [name, type, status], (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.json({ message: 'Train added successfully!', trainId: result.insertId });
+    });
+});
+
+
 //  Get train schedule by train ID
 app.get('/schedule/:train_id', (req, res) => {
     const { train_id } = req.params;
@@ -40,6 +52,18 @@ app.get('/schedule/:train_id', (req, res) => {
     });
 });
 
+
+// 7. Add a schedule for a train
+app.post('/schedule', (req, res) => {
+    const { train_id, station_id, arrival_time, departure_time } = req.body;
+    const query = `
+        INSERT INTO schedules (train_id, station_id, arrival_time, departure_time) 
+        VALUES (?, ?, ?, ?)`;
+    db.query(query, [train_id, station_id, arrival_time, departure_time], (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.json({ message: 'Schedule added successfully!', scheduleId: result.insertId });
+    });
+});
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
