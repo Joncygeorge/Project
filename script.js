@@ -77,6 +77,21 @@ app.put('/trains/:id', (req, res) => {
     });
 });
 
+// 8. Update a schedule
+app.put('/schedule/:id', (req, res) => {
+    const { id } = req.params;
+    const { train_id, station_id, arrival_time, departure_time } = req.body;
+    const query = `
+        UPDATE schedules 
+        SET train_id = ?, station_id = ?, arrival_time = ?, departure_time = ? 
+        WHERE schedule_id = ?`;
+    db.query(query, [train_id, station_id, arrival_time, departure_time, id], (err, result) => {
+        if (err) return res.status(500).send(err);
+        if (result.affectedRows === 0) return res.status(404).send({ message: 'Schedule not found' });
+        res.json({ message: 'Schedule updated successfully!' });
+    });
+});
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
