@@ -64,6 +64,20 @@ app.post('/schedule', (req, res) => {
         res.json({ message: 'Schedule added successfully!', scheduleId: result.insertId });
     });
 });
+
+// 4. Update a train
+app.put('/trains/:id', (req, res) => {
+    const { id } = req.params;
+    const { name, type, status } = req.body;
+    const query = 'UPDATE trains SET name = ?, type = ?, status = ? WHERE train_id = ?';
+    db.query(query, [name, type, status, id], (err, result) => {
+        if (err) return res.status(500).send(err);
+        if (result.affectedRows === 0) return res.status(404).send({ message: 'Train not found' });
+        res.json({ message: 'Train updated successfully!' });
+    });
+});
+
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
