@@ -92,6 +92,16 @@ app.put('/schedule/:id', (req, res) => {
     });
 });
 
+// Delete a train
+app.delete('/trains/:id', (req,res)=>{
+    const { id } =req.params;
+    db.query ('DELETE FROM trains where train_id =?', [id], (err,result) =>{
+        if(err) return res.status (500).send (err);
+        if (result.affectedRows ===0) return res.status (404).send ({ message:'Train not found'})
+            res.json({ message:'Train deleted successfully'})
+    })
+})
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
