@@ -102,6 +102,17 @@ app.delete('/trains/:id', (req,res)=>{
     })
 })
 
+// Delete a schedule
+app.delete ('/schedule/:id', (req,res) =>{ 
+    const {id} = req.params;
+    db.query('DELETE FROM schedules where schedule_id =?', [id], (err,result)=>{
+        if(err) return res.status (500).send (err);
+        if (result.affectedRows===0) return res.status(404). send ({ message: 'schedule not found'})
+            res.json({ message:'schedule deleted successfully'})
+    })
+
+})
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
