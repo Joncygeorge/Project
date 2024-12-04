@@ -5,6 +5,10 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors());
+
+
 // Routes
 // get all trains
 app.get('/trains', (req, res) => {
@@ -32,6 +36,7 @@ app.post('/trains', (req, res) => {
     const query = 'INSERT INTO trains (name, type, status) VALUES (?, ?, ?)';
     db.query(query, [name, type, status], (err, result) => {
         if (err) return res.status(500).send(err);
+        console.error("Error during train creation:", error);
         res.json({ message: 'Train added successfully!', trainId: result.insertId });
     });
 });
