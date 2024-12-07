@@ -20,21 +20,30 @@
             <select id="trainStatus" required>
                 <option value="active">Delayed</option>
                 <option value="inactive">Ontime</option>
-            </select>
+                <option value="inactive">Cancelled</option>
+                </select>
             <button type="submit">Add Train</button>
         </form>
     </div>
-
+   <div class="container">
+        <h2>Search Trains</h2>
+        <form id="searchTrainForm">
+            <label for="searchName">Train Name:</label>
+            <input type="text" id="searchName" placeholder="Enter train name" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
     <div class="container">
         <h2>All Trains</h2>
-        <button onclick="fetchTrains()">Load Trains</button>
+         <!-- s -->
         <table>
             <thead>
                 <tr>
                     <th>Train ID</th>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Status</th>
+                    <th> Status</th>
+                    
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,9 +51,8 @@
                 
             </tbody>
         </table>
+        
     </div>
-
-    
-    <script src="app.js"></script>
+ <script src="app.js"></script>
 </body>
 </html>
