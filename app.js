@@ -52,7 +52,7 @@ async function fetchTrains() {
                     <td>${train.train_type}</td>
                      <td>${train.status}</td>
                     <td class="actions">
-                        <button onclick="deleteTrain(${train.train_id})">Delete</button>
+                       
                         <button onclick="updateTrain(${train.train_id}, '${train.name}', '${train.train_type}', '${train.status}')">Update</button>
                     </td>
                 </tr>
@@ -125,20 +125,50 @@ async function deleteTrain(trainId) {
 }
 
 function updateTrain(trainId, name, train_type, status) {
-    const newName = prompt('Enter new name:', name);
-    const newType = prompt('Enter new train_type:', train_type);
-    const newStatus = prompt('Enter new status:', status);
-    if (newName && newType && newStatus ) {
-        fetch(`${BASE_URL}/trains/${trainId}`, {
+    document.getElementById('updateTrainId').value = trainId;
+    document.getElementById('updateTrainName').value = name;
+    document.getElementById('updateTrainType').value = train_type;
+    document.getElementById('updateTrainStatus').value = status;
+    document.getElementById('updateTrainFormContainer').style.display = 'block';
+}
+async function handleUpdateSubmit(event) {
+    event.preventDefault();
+
+    const trainId = document.getElementById('updateTrainId').value;
+    const newName = document.getElementById('updateTrainName').value;
+    const newType = document.getElementById('updateTrainType').value;
+    const newStatus = document.getElementById('updateTrainStatus').value;
+
+    try {
+        const response = await fetch(`${BASE_URL}/trains/${trainId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: newName, type: newType, status: newStatus }),
-        })
-            .then((response) => response.json())
-            .then((result) => {
-                alert(result.message);
-                fetchTrains();
-            })
-            .catch((error) => console.error('Error updating train:', error));
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to update train');
+        }
+
+        const result = await response.json();
+        showMessage(result.message || 'Train updated successfully!', 'success');
+        fetchTrains(); 
+        document.getElementById('updateTrainForm').reset();
+        document.getElementById('updateTrainFormContainer').style.display = 'none'; 
+    } catch (error) {
+        console.error('Error updating train:', error);
+        showMessage(error.message || 'Something went wrong', 'error');
     }
 }
+function showMessage(message, type) {
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = message;
+    messageDiv.className = type === 'success' ? 'message success' : 'message error';
+    messageDiv.style.display = 'block';
+    setTimeout(() => {
+        messageDiv.style.display = 'none';
+    }, 3000);
+}
+document.getElementById('updateTrainForm').addEventListener('submit', handleUpdateSubmit);
+

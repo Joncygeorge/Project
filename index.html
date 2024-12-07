@@ -51,7 +51,30 @@
                 
             </tbody>
         </table>
-        
+
+
+
+<div id="updateTrainFormContainer" style="display: none;">
+    <h2>Update Train</h2>
+    <form id="updateTrainForm">
+        <input type="hidden" id="updateTrainId">
+
+        <label for="updateTrainName">Train Name:</label>
+        <input type="text" id="updateTrainName" required><br><br>
+
+        <label for="updateTrainType">Train Type:</label>
+        <input type="text" id="updateTrainType" required><br><br>
+
+        <label for="updateTrainStatus">Status:</label>
+        <input type="text" id="updateTrainStatus" required><br><br>
+
+        <button type="submit">Update Train</button>
+        <button type="button" onclick="document.getElementById('updateTrainFormContainer').style.display='none'">Cancel</button>
+    </form>
+
+    <div id="message" style="margin-top: 10px;"></div>
+</div>
+
     </div>
  <script src="app.js"></script>
 </body>

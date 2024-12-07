@@ -35,17 +35,6 @@ app.get('/trains/search', (req, res) => {
         res.json(results);
     });
 });
-
-
-
-app.get('/trains/:id', (req, res) => {
-    const { id } = req.params;
-    db.query('SELECT * FROM trains WHERE train_id = ?', [id], (err, results) => {
-        if (err) return res.status(500).send(err);
-        if (results.length === 0) return res.status(404).send({ message: 'Train not found' });
-        res.json(results[0]);
-    });
-});
 app.post('/trains', (req, res) => {
     const { name, type, status } = req.body;
     const query = 'INSERT INTO trains (name, train_type, status) VALUES (?, ?, ?)';
