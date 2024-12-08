@@ -52,7 +52,7 @@ async function fetchTrains() {
                     <td>${train.train_type}</td>
                      <td>${train.status}</td>
                     <td class="actions">
-                       
+                        <button onclick="showDeleteModal(${train.train_id})">Delete</button>
                         <button onclick="updateTrain(${train.train_id}, '${train.name}', '${train.train_type}', '${train.status}')">Update</button>
                     </td>
                 </tr>
@@ -107,21 +107,50 @@ async function searchTrains(e) {
 }
 
 document.getElementById('searchTrainForm').addEventListener('submit', searchTrains);
+let trainIdToDelete = null;
 
+function showDeleteModal(trainId) {
+    trainIdToDelete = trainId;
+    document.getElementById('deleteModal').style.display = 'block';
+}
 
-async function deleteTrain(trainId) {
-    if (confirm('Are you sure you want to delete this train?')) {
+async function confirmDelete() {
+    if (trainIdToDelete) {
         try {
-            const response = await fetch(`${BASE_URL}/trains/${trainId}`, {
+            const response = await fetch(`${BASE_URL}/trains/${trainIdToDelete}`, {
                 method: 'DELETE',
             });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || 'Failed to delete train');
+            }
+
             const result = await response.json();
-            alert(result.message);
+            showMessage(result.message || 'Train deleted successfully!', 'success');
             fetchTrains();
         } catch (error) {
             console.error('Error deleting train:', error);
+            showMessage(error.message || 'Something went wrong', 'error');
+        } finally {
+            closeDeleteModal();
         }
     }
+}
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+    trainIdToDelete = null;
+}
+document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
+function showMessage(message, type) {
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = message;
+    messageDiv.className = `message ${type}`;
+    messageDiv.style.display = 'block';
+    setTimeout(() => {
+        messageDiv.style.display = 'none';
+    }, 3000);
 }
 
 function updateTrain(trainId, name, train_type, status) {
@@ -171,4 +200,3 @@ function showMessage(message, type) {
     }, 3000);
 }
 document.getElementById('updateTrainForm').addEventListener('submit', handleUpdateSubmit);
-

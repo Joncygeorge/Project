@@ -18,9 +18,9 @@
             <input type="text" id="trainType" required>
             <label for="trainStatus">Train Status:</label>
             <select id="trainStatus" required>
-                <option value="active">Delayed</option>
-                <option value="inactive">Ontime</option>
-                <option value="inactive">Cancelled</option>
+                <option value="Delayed">Delayed</option>
+                <option value="Ontime">Ontime</option>
+                <option value="Cancelled">Cancelled</option>
                 </select>
             <button type="submit">Add Train</button>
         </form>
@@ -51,9 +51,14 @@
                 
             </tbody>
         </table>
-
-
-
+<div id="deleteModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p>Are you sure you want to delete this train?</p>
+        <button id="confirmDeleteBtn">Yes, Delete</button>
+        <button id="cancelDeleteBtn">Cancel</button>
+    </div>
+</div>
+<div id="message" class="message" style="display: none;"></div>
 <div id="updateTrainFormContainer" style="display: none;">
     <h2>Update Train</h2>
     <form id="updateTrainForm">
@@ -71,11 +76,9 @@
         <button type="submit">Update Train</button>
         <button type="button" onclick="document.getElementById('updateTrainFormContainer').style.display='none'">Cancel</button>
     </form>
-
     <div id="message" style="margin-top: 10px;"></div>
 </div>
-
-    </div>
+ </div>
  <script src="app.js"></script>
 </body>
 </html>

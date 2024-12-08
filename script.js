@@ -43,7 +43,7 @@ app.post('/trains', (req, res) => {
         res.json({ message: 'Train added successfully!', trainId: result.insertId });
     });
 });
-app.put('/trains/', (req, res) => {
+app.put('/trains/:id', (req, res) => {
     const { id } = req.params;
     const { name, type, status } = req.body;
     const query = 'UPDATE trains SET name = ?, train_type = ?, status = ? WHERE train_id = ?';
