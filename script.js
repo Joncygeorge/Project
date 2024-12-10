@@ -39,8 +39,8 @@ app.post('/trains', (req, res) => {
     const { name, type, status } = req.body;
     const query = 'INSERT INTO trains (name, train_type, status) VALUES (?, ?, ?)';
     db.query(query, [name, type, status], (err, result) => {
-        if (err) return res.status(500).send(err);
-        res.json({ message: 'Train added successfully!', trainId: result.insertId });
+        if (err) return res.status(500).json({ error: 'Failed to add train.' });
+        res.status(201).json({ message: 'Train added successfully!', trainId: result.insertId })
     });
 });
 app.put('/trains/:id', (req, res) => {
@@ -58,10 +58,19 @@ app.delete('/trains/:id', (req,res)=>{
     db.query ('DELETE FROM trains where train_id =?', [id], (err,result) =>{
         if(err) return res.status (500).send (err);
         if (result.affectedRows ===0) return res.status (404).send ({ message:'Train not found'})
-            res.json({ message:'Train deleted successfully'})
+            res.json({ message:'Train deleted successfully.'})
     })
 })
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+
+let server;
+
+if (process.env.NODE_ENV !== 'test') {
+    server = app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+} else {
+    server = app.listen(0); // Let the OS choose a random available port during tests
+}
+
+module.exports = { app, server };
