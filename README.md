@@ -87,6 +87,17 @@ Database name: Train tracking system, Table name: trains
 # Testing
 Jest: A JavaScript testing framework used for unit testing and integration testing to ensure the functionality of the backend and API endpoints.
 Supertest: A library for testing HTTP requests and responses, useful for validating the Express.js routes and API behavior.
+# Run the Project
+Node js installed.
+Set up a MySQL  server to store train data.
+API testing tool: Installed Postman to test backend APIs.
+Clone the repository https://github.com/Joncygeorge/Project.git
+Installed required dependencies.
+created env file and db.js to connect with the database.
+Database Initialized
+Start the Backend - node script.js
+Navigate to the front end
+Test APIs
 
 # Conclusion
 By offering crucial functions like train tracking and real-time status updates, the Train Tracking System streamlines train administration. High scalability, performance, and dependability are guaranteed by this application's use of a contemporary tech stack (HTML, CSS, JavaScript, Node.js, MySQL).
