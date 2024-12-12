@@ -7,9 +7,6 @@ app.use(express.json());
 
 const cors = require('cors');
 app.use(cors());
-
-
-
 app.get('/trains', (req, res) => {
     db.query('SELECT * FROM trains', (err, results) => {
         if (err) return res.status(500).send(err);
@@ -70,7 +67,7 @@ if (process.env.NODE_ENV !== 'test') {
         console.log(`Server is running on port ${PORT}`);
     });
 } else {
-    server = app.listen(0); // Let the OS choose a random available port during tests
+    server = app.listen(0);
 }
 
 module.exports = { app, server };
